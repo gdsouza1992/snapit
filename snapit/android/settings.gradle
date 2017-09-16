@@ -1,0 +1,3 @@
+rootProject.name = 'snapit'
+
+include ':app'
