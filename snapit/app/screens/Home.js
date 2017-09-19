@@ -16,6 +16,9 @@ const API_KEY = "AIzaSyAuQCVeNfKhtRk9KlChQPT1nO27DPO_5Ss";
 
 
 export default class HomeScreen extends Component {
+    static navigationOptions = {
+        title: 'Youtube video player',
+    };
 
     constructor(props) {
         super(props);
@@ -26,7 +29,7 @@ export default class HomeScreen extends Component {
         };
 
         this.videoSearch("surfboards");
-      }
+    }
 
     videoSearch(term) {
         YTSearch({ key: API_KEY, term: term }, videos => {
@@ -35,6 +38,12 @@ export default class HomeScreen extends Component {
                 selectedVideo: videos[0]
             });
         });
+    }
+
+    videoSelected(data) {
+        console.log(data);
+        const { navigate } = this.props.navigation;
+        navigate('Movie', { videoData : data })
     }
 
     render() {
@@ -47,7 +56,7 @@ export default class HomeScreen extends Component {
             <View>
                 <VideoSearchBar onSearchTermChange={videoSearch} />
                 <VideoList
-                    onVideoSelect={selectedVideo => this.setState({ selectedVideo })}
+                    videoSelected={this.videoSelected.bind(this)}
                     videos={this.state.videos}
                 />
             </View>
